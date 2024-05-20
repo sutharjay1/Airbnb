@@ -129,71 +129,77 @@ const Page = () => {
 	});
 
 	return (
-		<Animated.ScrollView
-			className="flex-1 bg-white"
-			ref={scrollRef}
-			// contentContainerStyle={{ paddingTop: 100 }}
-			scrollEventThrottle={16}
-		>
-			<Animated.Image
-				source={{ uri: listing?.xl_picture_url }}
-				style={[{ width, height: IMG_HEIGHT }, imageAnimatedStyle]}
-				className="w-full"
-			/>
-			<View className="p-3 pb-8 bg-white">
-				<Text className="text-2xl font-bold mb-0">{listing?.name}</Text>
-				<Text className="text-lg text-[#5E5D5E] ">
-					{listing?.room_type} in {listing?.smart_location}
-				</Text>
-				<Text className="text-base text-[#5E5D5E] ">
-					{listing?.guests_included} guests · {listing?.bedrooms}{' '}
-					bedrooms · {listing?.beds} bed · {listing?.bathrooms}{' '}
-					bathrooms
-				</Text>
-				<View className="flex flex-row gap-1 items-center  mb-2">
-					<Ionicons
-						name="star"
-						size={16}
-					/>
-					<Text className="text-base font-semibold">
-						{listing?.review_scores_rating / 20} ·{' '}
-						{listing?.number_of_reviews} reviews
+		<View className='flex-1 bg-white'>
+			<Animated.ScrollView
+				className="flex-1 bg-white"
+				ref={scrollRef}
+				// contentContainerStyle={{ paddingTop: 100 }}
+				scrollEventThrottle={16}
+			>
+				<Animated.Image
+					source={{ uri: listing?.xl_picture_url }}
+					style={[{ width, height: IMG_HEIGHT }, imageAnimatedStyle]}
+					className="w-full"
+				/>
+				<View className="p-3 pb-8 bg-white">
+					<Text className="text-2xl font-bold mb-0">
+						{listing?.name}
+					</Text>
+					<Text className="text-lg text-[#5E5D5E] ">
+						{listing?.room_type} in {listing?.smart_location}
+					</Text>
+					<Text className="text-base text-[#5E5D5E] ">
+						{listing?.guests_included} guests · {listing?.bedrooms}{' '}
+						bedrooms · {listing?.beds} bed · {listing?.bathrooms}{' '}
+						bathrooms
+					</Text>
+					<View className="flex flex-row gap-1 items-center  mb-2">
+						<Ionicons
+							name="star"
+							size={16}
+						/>
+						<Text className="text-base font-semibold">
+							{listing?.review_scores_rating / 20} ·{' '}
+							{listing?.number_of_reviews} reviews
+						</Text>
+					</View>
+					<View className="border-b border-gray-300 mb-4" />
+					<View className="flex flex-row items-center gap-4 mb-4">
+						<Image
+							source={{ uri: listing?.host_picture_url }}
+							className="w-12 h-12 rounded-full"
+						/>
+						<View>
+							<Text className="font-semibold text-base">{`Hosted by ${listing?.host_name}`}</Text>
+							<Text>{`Host since ${listing?.host_since}`}</Text>
+						</View>
+					</View>
+					<View className="border-b border-gray-300 mb-4" />
+					<Text className="text-base text-[#5E5D5E] mb-12">
+						{listing?.description}
 					</Text>
 				</View>
-				<View className="border-b border-gray-300 mb-4" />
-				<View className="flex flex-row items-center gap-4 mb-4">
-					<Image
-						source={{ uri: listing?.host_picture_url }}
-						className="w-12 h-12 rounded-full"
-					/>
-					<View>
-						<Text className="font-semibold text-base">{`Hosted by ${listing?.host_name}`}</Text>
-						<Text>{`Host since ${listing?.host_since}`}</Text>
-					</View>
-				</View>
-				<View className="border-b border-gray-300 mb-4" />
-				<Text className="text-base text-[#5E5D5E]">
-					{listing?.description}
-				</Text>
-			</View>
 
-			<Animated.View
-				className="absolute bottom-0 w-full p-4 bg-white border-t border-gray-300"
-				entering={SlideInDown.delay(200)}
-			>
-				<View className="flex flex-row justify-between items-center">
-					<TouchableOpacity className="flex flex-row items-center gap-2">
-						<Text className="text-xl font-semibold text-[#1A1A1A]">{`€${listing?.price}`}</Text>
-						<Text className="text-base text-[#5E5D5E]">night</Text>
-					</TouchableOpacity>
-					<TouchableOpacity className="px-4 py-2 bg-[#FF385C] rounded-md">
-						<Text className="text-white font-semibold">
-							Reserve
-						</Text>
-					</TouchableOpacity>
-				</View>
-			</Animated.View>
-		</Animated.ScrollView>
+				<Animated.View
+					className="absolute bottom-0 w-full p-4 bg-white border-t border-gray-300"
+					entering={SlideInDown.delay(200)}
+				>
+					<View className="flex flex-row justify-between items-center">
+						<TouchableOpacity className="flex flex-row items-center gap-2">
+							<Text className="text-xl font-semibold text-[#1A1A1A]">{`€${listing?.price}`}</Text>
+							<Text className="text-base text-[#5E5D5E]">
+								night
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity className="px-4 py-2 bg-[#FF385C] rounded-md">
+							<Text className="text-white font-semibold">
+								Reserve
+							</Text>
+						</TouchableOpacity>
+					</View>
+				</Animated.View>
+			</Animated.ScrollView>
+		</View>
 	);
 };
 
