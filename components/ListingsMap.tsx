@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { ListingsGeoProps } from '@/interfaces/listingsGeo';
 import { useRouter } from 'expo-router';
+import MapView from 'react-native-map-clustering';
 
 interface Props {
 	listings: any[];
@@ -22,6 +23,26 @@ const ListingsMap = ({ listings }: Props) => {
 		router.push(`/listing/${event.properties.id}`);
 	};
 
+	const renderCluster = (cluster: any) => {
+		const { id, geometry, onPress, properties } = cluster;
+		const points = properties.point_count;
+
+		return (
+			<Marker
+				key={`cluster-${id}`}
+				onPress={onPress}
+				coordinate={{
+					longitude: geometry.coordinates[0],
+					latitude: geometry.coordinates[1],
+				}}
+			>
+				<View className="p-2 bg-white rounded-2xl">
+					<Text className="text-black text-center">{points}</Text>
+				</View>
+			</Marker>
+		);
+	};
+
 	return (
 		<View className="flex-1 bg-[#FDFFFF]">
 			<MapView
@@ -31,6 +52,9 @@ const ListingsMap = ({ listings }: Props) => {
 				showsCompass
 				provider={PROVIDER_GOOGLE}
 				initialRegion={INITIAL_REGION}
+				clusterColor="#FF385C"
+				clusterTextColor="#000"
+				renderCluster={renderCluster}
 			>
 				{listings.features.map<any>((listing: ListingsGeoProps) => (
 					<Marker
@@ -41,6 +65,13 @@ const ListingsMap = ({ listings }: Props) => {
 							longitude: listing.geometry.coordinates[0],
 						}}
 					/>
+					// >
+					// 	<View className="px-2 py-1 bg-[#FF385C] rounded-2xl">
+					// 		<Text className="text-white text-center">
+					// 			${listing.properties.price}
+					// 		</Text>
+					// 	</View>
+					// </Marker>
 				))}
 			</MapView>
 		</View>

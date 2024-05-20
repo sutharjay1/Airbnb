@@ -7,6 +7,7 @@ import listingsData from '@/assets/data/airbnb-listings.json';
 import listingsDataGeo from '@/assets/data/airbnb-listings-geo.json';
 import MapView from 'react-native-maps';
 import ListingsMap from '@/components/ListingsMap';
+import ListingBottomSheet from '@/components/ListingBottomSheet';
 
 const index = () => {
 	const [category, setCategory] = useState('Tiny homes');
@@ -33,6 +34,10 @@ const index = () => {
 			/>
 
 			<ListingsMap listings={geoItems} />
+			<ListingBottomSheet
+				listings={items}
+				category={category}
+			/>
 
 			{/* <Listings
 				listings={items}
