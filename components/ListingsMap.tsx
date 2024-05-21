@@ -56,7 +56,7 @@ const ListingsMap = ({ listings }: Props) => {
 				clusterTextColor="#000"
 				renderCluster={renderCluster}
 			>
-				{listings.features.map<any>((listing: ListingsGeoProps) => (
+				{listings.map<any>((listing: ListingsGeoProps) => (
 					<Marker
 						key={listing.properties.id}
 						onPress={() => onMarkerSelected(listing)}
@@ -65,13 +65,6 @@ const ListingsMap = ({ listings }: Props) => {
 							longitude: listing.geometry.coordinates[0],
 						}}
 					/>
-					// >
-					// 	<View className="px-2 py-1 bg-[#FF385C] rounded-2xl">
-					// 		<Text className="text-white text-center">
-					// 			${listing.properties.price}
-					// 		</Text>
-					// 	</View>
-					// </Marker>
 				))}
 			</MapView>
 		</View>

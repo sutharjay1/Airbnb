@@ -14,6 +14,9 @@ import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import ModalHeaderText from '@/components/ModalHeaderText';
+import Colors from '@/constants/Colors';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -84,57 +87,50 @@ function RootLayoutNav() {
 
 	useEffect(() => {
 		if (isLoaded && !isSignedIn) {
-			router.push('/(modals)/login');
+			router.push('/(tabs)/profile');
 		}
 	}, [isLoaded]);
 
 	return (
-		<Stack>
-			<Stack.Screen
-				name="(tabs)"
-				options={{ headerShown: false }}
-			/>
-			<Stack.Screen
-				name="(modals)/login"
-				options={{
-					title: 'Log in or Sign up',
-					headerTitleStyle: { fontFamily: 'mon-sb' },
-					headerLeft: () => (
-						<TouchableOpacity onPress={() => router.back()}>
-							<Ionicons
-								name="arrow-back"
-								size={24}
-								color="black"
-							/>
-						</TouchableOpacity>
-					),
-				}}
-			/>
-			<Stack.Screen
-				name="listing/[id]"
-				options={{
-					headerTitle: '',
-					headerTransparent: true,
-				}}
-			/>
-			<Stack.Screen
-				name="(modals)/booking"
-				options={{
-					title: 'Booking',
-					headerTitleStyle: { fontFamily: 'mon-sb' },
-					animation: 'fade',
-					headerLeft: () => (
-						<TouchableOpacity onPress={() => router.back()}>
-							<Ionicons
-								name="arrow-back"
-								size={24}
-								color="black"
-							/>
-						</TouchableOpacity>
-					),
-					presentation: 'transparentModal',
-				}}
-			/>
-		</Stack>
+		<GestureHandlerRootView style={{ flex: 1 }}>
+			<Stack>
+				<Stack.Screen
+					name="(tabs)"
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="(modals)/login"
+					options={{
+						title: 'Log in or Sign up',
+						headerTitleStyle: { fontFamily: 'mon-sb' },
+						headerLeft: () => (
+							<TouchableOpacity onPress={() => router.back()}>
+								<Ionicons
+									name="arrow-back"
+									size={24}
+									color="black"
+								/>
+							</TouchableOpacity>
+						),
+					}}
+				/>
+				<Stack.Screen
+					name="listing/[id]"
+					options={{
+						headerTitle: '',
+						headerTransparent: true,
+					}}
+				/>
+				<Stack.Screen
+					name="(modals)/booking"
+					options={{
+						presentation: 'transparentModal',
+						animation: 'fade',
+						headerTransparent: true,
+						headerTitle: () => <ModalHeaderText />,
+					}}
+				/>
+			</Stack>
+		</GestureHandlerRootView>
 	);
 }

@@ -5,12 +5,13 @@ import {
 	ScrollView,
 	StyleSheet,
 } from 'react-native';
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+import { Link, useNavigation } from 'expo-router';
 import Colors from '@/constants/Colors';
 import * as Haptics from 'expo-haptics';
+import BottomSheet from '@gorhom/bottom-sheet';
 
 const categories = [
 	{
@@ -50,6 +51,7 @@ interface Props {
 const ExploreHeader = ({ onCategoryChanged }: Props) => {
 	const itemRef = useRef<Array<TouchableOpacity | null>>([]);
 	const scrollRef = useRef<ScrollView | null>(null);
+	const navigation = useNavigation();
 
 	const [activeIndex, setActiveIndex] = useState(2);
 
@@ -69,32 +71,38 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
 		onCategoryChanged(categories[index].name);
 	};
 
+	const bottomSheetRef = useRef<BottomSheet>(null);
+
+	const toggleBottomSheet = () => {
+		navigation.navigate('(modals)/booking');
+		// const isActive = bottomSheetRef.current?.isActive;
+		// if (isActive) {
+		// 	bottomSheetRef.current?.close();
+		// } else {
+		// 	bottomSheetRef.current?.expand();
+		// }
+	};
+
 	return (
-		<SafeAreaView className=" bg-white shadow-xl">
+		<SafeAreaView className=" bg-white shadow-x">
 			<View className="h-fit pb-2">
 				<View className=" flex-row items-center justify-between px-4 py-2">
-					<Link
-						href="/(modals)/booking"
-						className={`w-full flex-1 mr-3 px-2 py-1 items-center  border-[1px] border-[#bbbbbb] rounded-full shadow-xl`}
-						asChild
-					>
-						<TouchableOpacity className="flex-row space-x-2">
-							<Ionicons
-								name="search-outline"
-								size={24}
-								color="black"
-								onLongPress={() => console.log('hi')}
-							/>
-							<View>
-								<Text style={{ fontFamily: 'mon-sb' }}>
-									Where to?
-								</Text>
-								<Text style={{ fontFamily: 'mon-m' }}>
-									Anywhere • Any week
-								</Text>
-							</View>
-						</TouchableOpacity>
-					</Link>
+					<TouchableOpacity className="flex-row space-x-2" onPress={toggleBottomSheet}>
+						<Ionicons
+							name="search-outline"
+							size={24}
+							color="black"
+							onLongPress={() => console.log('hi')}
+						/>
+						<View>
+							<Text style={{ fontFamily: 'mon-sb' }}>
+								Where to?
+							</Text>
+							<Text style={{ fontFamily: 'mon-m' }}>
+								Anywhere • Any week
+							</Text>
+						</View>
+					</TouchableOpacity>
 					<TouchableOpacity
 						className={`p-2 border-[1px] border-[#bbbbbb] rounded-full`}
 					>
